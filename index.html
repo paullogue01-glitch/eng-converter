@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engineering Unit Conversion Tool 1.00 by ByteFang</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .version {
+            font-size: 1.2rem;
+            color: #888;
+            margin-bottom: 5px;
+        }
+        
+        .author {
+            font-size: 1rem;
+            color: #00d4ff;
+        }
+        
+        .converter-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .section-title {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .icon {
+            font-size: 1.5rem;
+        }
+        
+        .input-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        input[type="number"] {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px 15px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #00d4ff;
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        select {
+            padding: 12px 15px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            min-width: 100px;
+        }
+        
+        select option {
+            background: #1a1a2e;
+            color: #fff;
+        }
+        
+        .arrow {
+            font-size: 1.5rem;
+            color: #00d4ff;
+        }
+        
+        .result-box {
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid #00d4ff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .result-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00d4ff;
+        }
+        
+        .result-unit {
+            font-size: 1.2rem;
+            color: #888;
+            margin-left: 10px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .wolf-emoji {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Engineering Unit Conversion Tool</h1>
+            <div class="version">Version 1.00</div>
+            <div class="author">by ByteFang <span class="wolf-emoji">🐺</span></div>
+        </header>
+
+        <!-- Pressure Converter -->
+        <div class="converter-section">
+            <h2 class="section-title">
+                <span class="icon">🔧</span>
+                Pressure Conversion
+            </h2>
+            <div class="input-group">
+                <input type="number" id="pressure-input" placeholder="Enter value" step="any">
+                <select id="pressure-from">
+                    <option value="psi">psi</option>
+                    <option value="bar">bar</option>
+                    <option value="kpa">kPa</option>
+                    <option value="mpa">MPa</option>
+                </select>
+                <span class="arrow">→</span>
+                <select id="pressure-to">
+                    <option value="psi">psi</option>
+                    <option value="bar" selected>bar</option>
+                    <option value="kpa">kPa</option>
+                    <option value="mpa">MPa</option>
+                </select>
+            </div>
+            <div class="result-box">
+                <span class="result-value" id="pressure-result">-</span>
+                <span class="result-unit" id="pressure-result-unit">bar</span>
+            </div>
+        </div>
+
+        <!-- Temperature Converter -->
+        <div class="converter-section">
+            <h2 class="section-title">
+                <span class="icon">🌡️</span>
+                Temperature Conversion
+            </h2>
+            <div class="input-group">
+                <input type="number" id="temp-input" placeholder="Enter value" step="any">
+                <select id="temp-from">
+                    <option value="c">°C</option>
+                    <option value="f">°F</option>
+                    <option value="k">K</option>
+                </select>
+                <span class="arrow">→</span>
+                <select id="temp-to">
+                    <option value="c">°C</option>
+                    <option value="f" selected>°F</option>
+                    <option value="k">K</option>
+                </select>
+            </div>
+            <div class="result-box">
+                <span class="result-value" id="temp-result">-</span>
+                <span class="result-unit" id="temp-result-unit">°F</span>
+            </div>
+        </div>
+
+        <!-- Flow Converter -->
+        <div class="converter-section">
+            <h2 class="section-title">
+                <span class="icon">💧</span>
+                Flow Conversion
+            </h2>
+            <div class="input-group">
+                <input type="number" id="flow-input" placeholder="Enter value" step="any">
+                <select id="flow-from">
+                    <option value="gpm">gpm</option>
+                    <option value="lpm">lpm</option>
+                    <option value="m3h">m³/h</option>
+                </select>
+                <span class="arrow">→</span>
+                <select id="flow-to">
+                    <option value="gpm">gpm</option>
+                    <option value="lpm" selected>lpm</option>
+                    <option value="m3h">m³/h</option>
+                </select>
+            </div>
+            <div class="result-box">
+                <span class="result-value" id="flow-result">-</span>
+                <span class="result-unit" id="flow-result-unit">lpm</span>
+            </div>
+        </div>
+
+        <footer>
+            Engineering Unit Conversion Tool 1.00 by ByteFang 🐺<br>
+            For industrial automation professionals
+        </footer>
+    </div>
+
+    <script>
+        // Conversion functions
+        function convertPressure(value, from, to) {
+            const toPa = {
+                'psi': 6894.757,
+                'bar': 100000,
+                'kpa': 1000,
+                'mpa': 1000000
+            };
+            const paValue = value * toPa[from];
+            return paValue / toPa[to];
+        }
+
+        function convertTemp(value, from, to) {
+            let celsius;
+            if (from === 'c') celsius = value;
+            else if (from === 'f') celsius = (value - 32) * 5/9;
+            else if (from === 'k') celsius = value - 273.15;
+            
+            if (to === 'c') return celsius;
+            else if (to === 'f') return (celsius * 9/5) + 32;
+            else if (to === 'k') return celsius + 273.15;
+        }
+
+        function convertFlow(value, from, to) {
+            const toLpm = {
+                'gpm': 3.78541,
+                'lpm': 1,
+                'm3h': 16.6667
+            };
+            const lpmValue = value * toLpm[from];
+            return lpmValue / toLpm[to];
+        }
+
+        // Update functions
+        function updatePressure() {
+            const input = parseFloat(document.getElementById('pressure-input').value);
+            const from = document.getElementById('pressure-from').value;
+            const to = document.getElementById('pressure-to').value;
+            
+            if (!isNaN(input)) {
+                const result = convertPressure(input, from, to);
+                document.getElementById('pressure-result').textContent = result.toFixed(4);
+                document.getElementById('pressure-result-unit').textContent = to;
+            } else {
+                document.getElementById('pressure-result').textContent = '-';
+            }
+        }
+
+        function updateTemp() {
+            const input = parseFloat(document.getElementById('temp-input').value);
+            const from = document.getElementById('temp-from').value;
+            const to = document.getElementById('temp-to').value;
+            
+            if (!isNaN(input)) {
+                const result = convertTemp(input, from, to);
+                document.getElementById('temp-result').textContent = result.toFixed(2);
+                document.getElementById('temp-result-unit').textContent = to === 'c' ? '°C' : to === 'f' ? '°F' : 'K';
+            } else {
+                document.getElementById('temp-result').textContent = '-';
+            }
+        }
+
+        function updateFlow() {
+            const input = parseFloat(document.getElementById('flow-input').value);
+            const from = document.getElementById('flow-from').value;
+            const to = document.getElementById('flow-to').value;
+            
+            if (!isNaN(input)) {
+                const result = convertFlow(input, from, to);
+                document.getElementById('flow-result').textContent = result.toFixed(4);
+                document.getElementById('flow-result-unit').textContent = to === 'm3h' ? 'm³/h' : to;
+            } else {
+                document.getElementById('flow-result').textContent = '-';
+            }
+        }
+
+        // Event listeners
+        ['pressure-input', 'pressure-from', 'pressure-to'].forEach(id => {
+            document.getElementById(id).addEventListener('input', updatePressure);
+        });
+
+        ['temp-input', 'temp-from', 'temp-to'].forEach(id => {
+            document.getElementById(id).addEventListener('input', updateTemp);
+        });
+
+        ['flow-input', 'flow-from', 'flow-to'].forEach(id => {
+            document.getElementById(id).addEventListener('input', updateFlow);
+        });
+    </script>
+</body>
+</html>
